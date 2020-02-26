@@ -8,6 +8,10 @@
   border-color: coral;
 }
 
+/* note editing text box fill width of screen */
+#note_text_input_area {
+  width:99.5%
+}
 
 /* popup styling */
 #snackbar {

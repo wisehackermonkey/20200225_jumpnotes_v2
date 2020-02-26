@@ -13,5 +13,16 @@ Build docker image
 Run Docker locally
 >docker run -i --name jumpnotes2 -p 80:3000 jumpnotes2:latest
 
+Publish docker image
+>docker tag jumpnotes2 wisehackermonkey/jumpnotes2:latest
+>docker login
+>docker push wisehackermonkey/jumpnotes2:latest
+
+Docker run for hosting
+>docker run -d --name jumpnotes2 -p 80:3000 wisehackermonkey/jumpnotes2:latest
+
+
+NOTE: by default docker sets visiblity of the image to private, [FIX]: go to docker hub and make it publick
+
 Live build docker with nodemon and a watch folder
->nodemon -e js,html --watch .compiled  --watch web --exec "docker stop jumpnote2 & docker rm jumpnote2 & docker build -t jumpnote2 . & docker run -d --name jumpnote2 -p 80:3000 jumpnote2:latest"
+>nodemon -e js,html,css --watch .compiled  --watch web --exec "docker stop jumpnote2 & docker rm jumpnote2 & docker build -t jumpnote2 . & docker run -d --name jumpnote2 -p 80:3000 jumpnote2:latest"

@@ -17,11 +17,13 @@
     <h3>Project Started: 20200225</h3>
     <br>
     <!-- cool hack to force the form not to redirect the page to /v1/note-save/ 
-    by traping it in a iframe -->
+    by traping it in a iframe 
+    link to stack overflow https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection/30666118
+    -->
     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
 
     <form action="/v1/note-save/" id="note_input_form" method="post" target="dummyframe">
-      <textarea name="note_text"  cols="30" rows="10"> Enter Notes here...</textarea>
+      <textarea name="note_text" id="note_text_input_area" cols="30" rows="10"> Enter Notes here...</textarea>
       <br>
       <input type="submit" value="Save"  onclick="savePopup()"/>
     </form>
