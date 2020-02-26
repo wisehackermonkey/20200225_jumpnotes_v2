@@ -1,3 +1,6 @@
+#by oran c
+./db/*.json
+
 # Logs
 logs
 *.log
