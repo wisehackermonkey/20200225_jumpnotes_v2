@@ -1,5 +1,5 @@
 #by oran c
-./db/*.json
+db/*.json
 
 # Logs
 logs
