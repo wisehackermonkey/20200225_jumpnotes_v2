@@ -40,6 +40,7 @@ var PORT = 3000; //https://github.com/typicode/lowdb
 // - edit page
 // - edit text on clicked
 // - add favicon 
+// - dockerize
 
 //fix  editNote(text)to work with note id number
 
@@ -75,9 +76,13 @@ app.get("/v1/load-notes/", function (req, res) {
 
     var load_db_json = db.get("notes").value();
 
-    console.log(load_db_json.reduce(function (accumulator, current) {
-        return accumulator + ("\n " + current.time + ": " + current.text);
-    }));
+    if (load_db_json) {
+        console.log(load_db_json.reduce(function (accumulator, current) {
+            return accumulator + ("\n " + current.time + ": " + current.text);
+        }));
+    } else {
+        console.log("database is empty");
+    }
     res.send(JSON.stringify(load_db_json));
 });
 

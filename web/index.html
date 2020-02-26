@@ -12,16 +12,28 @@
     <script src="./js/load-notes.js"></script>
   </head>
   <body>
-    <form action="/v1/note-save/" id="note_input_form" method="post">
+    <h1>Jumpnotes</h1>
+    <h2>By wisehackermonkey</h2>
+    <h3>Project Started: 20200225</h3>
+    <br>
+    <!-- cool hack to force the form not to redirect the page to /v1/note-save/ 
+    by traping it in a iframe -->
+    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+    <form action="/v1/note-save/" id="note_input_form" method="post" target="dummyframe">
       <textarea name="note_text"  cols="30" rows="10"> Enter Notes here...</textarea>
       <br>
-      <input type="submit" value="Save" />
+      <input type="submit" value="Save"  onclick="savePopup()"/>
     </form>
+    <br>
     <!-- displaying notes here -->
     <div id="notes-container">
       <!-- Notes will by dynamically populated here -->
       <!-- Look at load-notes.js addNote() for the note template -->
     </div>
 
+    <!-- Hidden popup message, text here is displayed 
+         when the save note button is pressed -->
+    <div id="snackbar">Note has been saved</div>
   </body>
 </html>

@@ -38,6 +38,16 @@ function displayNotes(notes_array){
     })
 
 }
+// https://www.w3schools.com/howto/howto_js_snackbar.asp
+function savePopup(){
+    let x = document.getElementById("snackbar");
+    x.className = "show";
+    setTimeout(()=>{ 
+        location.reload() 
+        x.className = x.className.replace("show", "")
+        
+    }, 3000)
+}
 
 load_notes()
 

@@ -22,6 +22,7 @@
 // - edit page
 // - edit text on clicked
 // - add favicon 
+// - dockerize
 
 //fix  editNote(text)to work with note id number
 import express from "express"
@@ -70,7 +71,11 @@ app.get("/v1/load-notes/",(req,res)=>{
     
     let load_db_json = db.get("notes").value()
    
-    console.log(load_db_json.reduce((accumulator,current)=> accumulator + `\n ${current.time}: ${current.text}` ))
+    if(load_db_json){
+        console.log(load_db_json.reduce((accumulator,current)=> accumulator + `\n ${current.time}: ${current.text}` ))
+    }else{
+        console.log("database is empty")
+    }
     res.send(JSON.stringify(load_db_json))
 })
 
