@@ -12,10 +12,12 @@ var _FileSync = require("lowdb/adapters/FileSync");
 
 var _FileSync2 = _interopRequireDefault(_FileSync);
 
+var _expressValidator = require("express-validator");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //settings
-var PORT = 3000; //https://github.com/typicode/lowdb
+//https://github.com/typicode/lowdb
 //jumpnotes try number 2 
 //a notetaking app using a web page as the gui, and a nodejs backend 
 //by wisehackermonkey oran c
@@ -43,6 +45,9 @@ var PORT = 3000; //https://github.com/typicode/lowdb
 // - dockerize
 
 //fix  editNote(text)to work with note id number
+var PORT = 3000;
+
+//used for striping sanitizing user input
 
 var EMPTY_DB_SCHEMA = { notes: [] };
 var DATABASE_PATH = './db/db.json';
@@ -58,7 +63,12 @@ app.use(_express2.default.static("web"));
 app.use(_express2.default.urlencoded());
 
 //save the notes to the database
-app.post("/v1/note-save/", function (req, res) {
+app.post("/v1/note-save/", [
+//user input checks
+//-----------
+(0, _expressValidator.check)("note_text").isString().isLength({ min: 1 }).trim().escape()
+//-----------
+], function (req, res) {
 
     var note_text = req.body.note_text;
 

@@ -29,6 +29,8 @@ import express from "express"
 import low from "lowdb" //https://github.com/typicode/lowdb
 import FileSync from "lowdb/adapters/FileSync"
 
+//used for striping sanitizing user input
+import { check, validationResult } from "express-validator"
 
 
 
@@ -52,7 +54,12 @@ app.use(express.urlencoded())
 
 
 //save the notes to the database
-app.post("/v1/note-save/", (req,res)=>{
+app.post("/v1/note-save/", [
+    //user input checks
+    //-----------
+    check("note_text").isString().isLength({min:1}).trim().escape()
+    //-----------
+    ],(req,res)=>{
 
     let note_text = req.body.note_text
     
