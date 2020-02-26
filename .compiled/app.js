@@ -30,14 +30,18 @@ var PORT = 3000; //https://github.com/typicode/lowdb
 
 
 // x setup
-//x  api endpoint for form
-//x  webpage static routing
-//x webpage form
-//  databse save notes from form
-//  ----feature creap
-// view saved notes
-// webpage css flex box for notes
-// edit on notes when clicked
+// x  api endpoint for form
+// x  webpage static routing
+// x webpage form
+// x  databse save notes from form
+//----feature creap
+// x view saved notes
+// x webpage css flex box for notes
+// - edit page
+// - edit text on clicked
+// - add favicon 
+
+//fix  editNote(text)to work with note id number
 
 var EMPTY_DB_SCHEMA = { notes: [] };
 var DATABASE_PATH = './db/db.json';
@@ -52,15 +56,29 @@ var db = (0, _lowdb2.default)(adapter);
 app.use(_express2.default.static("web"));
 app.use(_express2.default.urlencoded());
 
+//save the notes to the database
 app.post("/v1/note-save/", function (req, res) {
-    console.log(req.url);
 
-    var note_text = req.body.notefields;
-    console.log(note_text);
-    // SaveNoteDatabase()
+    var note_text = req.body.note_text;
+
+    SaveNoteDatabase(note_text);
+
     var result_message = "Note has been saved to database:" + JSON.stringify(req.body);
+
+    console.log(req.url);
+    console.log("Saved note: " + note_text);
     console.log(result_message);
     res.send(result_message);
+});
+
+app.get("/v1/load-notes/", function (req, res) {
+
+    var load_db_json = db.get("notes").value();
+
+    console.log(load_db_json.reduce(function (accumulator, current) {
+        return accumulator + ("\n " + current.time + ": " + current.text);
+    }));
+    res.send(JSON.stringify(load_db_json));
 });
 
 console.log("Jumpnotes server v2: Starting...");
@@ -77,8 +95,8 @@ function SetupDatabase(schema) {
     db.defaults(schema).write();
 }
 
-function SaveNoteDatabase(note_text) {
+function SaveNoteDatabase(note_text_) {
     //save note to json database
-    db.get("notes").push({ text: note_text, time: Date.now() }).write();
+    db.get("notes").push({ text: note_text_, time: Date.now() }).write();
 }
 //# sourceMappingURL=app.js.map

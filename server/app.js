@@ -12,14 +12,18 @@
 
 
 // x setup
-//x  api endpoint for form
-//x  webpage static routing
-//x webpage form
-//  databse save notes from form
-//  ----feature creap
-// view saved notes
-// webpage css flex box for notes
-// edit on notes when clicked
+// x  api endpoint for form
+// x  webpage static routing
+// x webpage form
+// x  databse save notes from form
+//----feature creap
+// x view saved notes
+// x webpage css flex box for notes
+// - edit page
+// - edit text on clicked
+// - add favicon 
+
+//fix  editNote(text)to work with note id number
 import express from "express"
 import low from "lowdb" //https://github.com/typicode/lowdb
 import FileSync from "lowdb/adapters/FileSync"
@@ -46,16 +50,28 @@ app.use(express.urlencoded())
 
 
 
-
+//save the notes to the database
 app.post("/v1/note-save/", (req,res)=>{
-    console.log(req.url)
 
-    let note_text = req.body.notefields
-    console.log(note_text)
-    // SaveNoteDatabase()
+    let note_text = req.body.note_text
+    
+    SaveNoteDatabase(note_text)
+    
     let result_message = "Note has been saved to database:" +JSON.stringify(req.body)
+
+    console.log(req.url)
+    console.log(`Saved note: ${note_text}`)
     console.log(result_message)
     res.send(result_message);
+})
+
+
+app.get("/v1/load-notes/",(req,res)=>{
+    
+    let load_db_json = db.get("notes").value()
+   
+    console.log(load_db_json.reduce((accumulator,current)=> accumulator + `\n ${current.time}: ${current.text}` ))
+    res.send(JSON.stringify(load_db_json))
 })
 
 
@@ -76,9 +92,9 @@ function SetupDatabase(schema){
     db.defaults(schema).write()
 }
 
-function SaveNoteDatabase(note_text){
+function SaveNoteDatabase(note_text_){
      //save note to json database
      db.get("notes")
-     .push( { text: note_text, time: Date.now()})
+     .push( { text: note_text_, time: Date.now()})
      .write()
 }
