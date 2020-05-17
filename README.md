@@ -1,8 +1,8 @@
 # 20200225_jumpnotes_v2
+#### simple note taking app 
 ------
-simple note taking app
-![](#)
-
+# [Live Demo](http://www.orancollins.com:5000/) [20200516, email me if its down :) ]
+![](https://i.imgur.com/3e3nfwm.png)
 
 ### build the project 
 ```
